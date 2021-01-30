@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     cardsChosenId = []
     resultDisplay.textContent = cardsWon.length
     if (cardsWon.length === cardArray.length / 2) {
-      resultDisplay.textContent = 'Parabés você encontrou todos!'
-      feedBack.textContent = 'Parabés você encontrou todos!'
+      resultDisplay.textContent = 'Parabés você encontrou todos! Espero que tenha sido um tempo bem gasto.'
+      feedBack.textContent = 'Parabés você encontrou todos! Espero que tenha sido um tempo bem gasto.'
     }
   }
 

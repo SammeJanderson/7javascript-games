@@ -51,14 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ]
 
+  let emojis = ['😀', '😅', '🥺', '😂', '👍', '😉', '🙃', '🤫']
+
   cardArray.sort(() => 0.5 - Math.random())
 
   const grid = document.querySelector('.grid')
   const resultDisplay = document.querySelector('#result')
   const feedBack = document.querySelector('#feedback')
+  let erros = 0;
   let cardsChosen = []
   let cardsChosenId = []
   let cardsWon = []
+
 
   //cria o tabuleiro
   function createBoard() {
@@ -76,14 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('img')
     const optionOneId = cardsChosenId[0]
     const optionTwoId = cardsChosenId[1]
-    
-    if(optionOneId == optionTwoId) {
+
+    if (optionOneId == optionTwoId) {
       cards[optionOneId].setAttribute('src', 'imgs/blank.png')
       cards[optionTwoId].setAttribute('src', 'imgs/blank.png')
-      alert('You have clicked the same image!')
+      feedBack.textContent = 'A ideia é escoher escolher duas cartas, tipo DUAS cartas diferentes! 🤦‍♂️'
+
     }
     else if (cardsChosen[0] === cardsChosen[1]) {
-      alert('ocê achou um par')
+      feedBack.textContent = 'Não esperava por essa você achou um par, 😲'
+      erros = 0,
       cards[optionOneId].setAttribute('src', 'imgs/white.png')
       cards[optionTwoId].setAttribute('src', 'imgs/white.png')
       cards[optionOneId].removeEventListener('click', flipCard)
@@ -92,13 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       cards[optionOneId].setAttribute('src', 'imgs/blank.png')
       cards[optionTwoId].setAttribute('src', 'imgs/blank.png')
-      alert('Sorry, try again')
+      erros++;
+      
+      if (erros === 3) {
+        feedBack.textContent = 'Uhh! mais um erro, Se tiver dificil posso dar uma dica 😉. Brincadeirinha, sem dicas pra você 😂'
+      } else {
+        feedBack.textContent = 'Errou! ' + emojis[Math.floor(Math.random() * emojis.length - 2)]
+      }
+
     }
     cardsChosen = []
     cardsChosenId = []
     resultDisplay.textContent = cardsWon.length
-    if  (cardsWon.length === cardArray.length/2) {
+    if (cardsWon.length === cardArray.length / 2) {
       resultDisplay.textContent = 'Parabés você encontrou todos!'
+      feedBack.textContent = 'Parabés você encontrou todos!'
     }
   }
 
@@ -108,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cardsChosen.push(cardArray[cardId].name)
     cardsChosenId.push(cardId)
     this.setAttribute('src', cardArray[cardId].img)
-    if (cardsChosen.length ===2) {
+    if (cardsChosen.length === 2) {
       setTimeout(checkForMatch, 500)
     }
   }
